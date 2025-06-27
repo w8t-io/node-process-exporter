@@ -1,4 +1,4 @@
-# Node-Process-Exporter
+# 🎉 Node-Process-Exporter
 
 ---
 这是一个监控主机进程的exporter，用于分析主机进行的资源使用情况；通常在节点资源突然暴增时能够通过大盘快速定位到相应的 process。
@@ -62,18 +62,25 @@ spec:
 ```
 ## Metric 格式
 ``` 
-# HELP describe_node_process_cpu_info node process cpu monitor
-# TYPE describe_node_process_cpu_info gauge
-describe_node_process_cpu_info{cmd="/app/process",name="process",pid="1008428",user="root"} 1.625085769769547
+# HELP node_process_cpu_usage_percent Process CPU usage percentage
+# TYPE node_process_cpu_usage_percent gauge
+node_process_cpu_usage_percent{cmd="/app/process",name="process",pid="1008428",user="root"} 1.625085769769547
 
-# HELP describe_node_process_memory_info node process memory monitor
-# TYPE describe_node_process_memory_info gauge
-describe_node_process_memory_info{cmd="/app/process",name="process",pid="1008428",user="root"} 0.03518591615313425
+# HELP node_process_memory_usage_percent Process memory usage percentage
+# TYPE node_process_memory_usage_percent gauge
+node_process_memory_usage_percent{cmd="/app/process",name="process",pid="1008428",user="root"} 0.03518591615313425
 
-# HELP describe_node_process_openfiles_info node process openfiles monitor
-# TYPE describe_node_process_openfiles_info gauge
-describe_node_process_openfiles_info{cmd="/app/process",name="process",pid="1008428",user="root"} 9
+# HELP node_process_open_files_count Number of open files by the process
+# TYPE node_process_open_files_count gauge
+node_process_open_files_count{cmd="/app/process",name="process",pid="1008428",user="root"} 9
 
+# HELP node_process_read_bytes_total Total number of bytes read by the process.
+# TYPE node_process_read_bytes_total counter
+node_process_read_bytes_total{cmd="/app/process",name="process",pid="1322556",user="root"} 0
+
+# HELP node_process_write_bytes_total Total number of bytes written by the process.
+# TYPE node_process_write_bytes_total counter
+node_process_write_bytes_total{cmd="/app/process",name="process",pid="1322556",user="root"} 0
 ```
 
 ## Prometheus 配置
