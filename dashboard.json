@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 174,
+  "id": 439,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -39,7 +39,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -48,8 +48,11 @@
             },
             "insertNulls": false,
             "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 3,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -82,16 +85,20 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 24,
+        "h": 10,
+        "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 1,
+      "id": 4,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
@@ -107,7 +114,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "describe_node_process_cpu_info{instance=\"${instance}\"}",
+          "expr": "topk(${top},node_process_cpu_usage_percent{instance=\"${instance}\"})",
           "legendFormat": "{{name}} - Pid: {{pid}}",
           "range": true,
           "refId": "A"
@@ -133,7 +140,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -143,7 +150,7 @@
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 3,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -176,16 +183,20 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 8
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 0
       },
       "id": 3,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
@@ -201,7 +212,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "describe_node_process_memory_info{instance=\"${instance}\"}",
+          "expr": "topk(${top},node_process_memory_usage_percent{instance=\"${instance}\"})",
           "legendFormat": "{{name}} - Pid: {{pid}}",
           "range": true,
           "refId": "A"
@@ -227,7 +238,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -236,8 +247,11 @@
             },
             "insertNulls": false,
             "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 3,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -264,21 +278,26 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 24,
+        "h": 10,
+        "w": 12,
         "x": 0,
-        "y": 16
+        "y": 10
       },
-      "id": 2,
+      "id": 1,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
@@ -294,13 +313,127 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "describe_node_process_openfiles_info{instance=\"${instance}\"}",
+          "expr": "topk(${top},node_process_open_files_count{instance=\"${instance}\"})",
           "legendFormat": "{{name}} - Pid: {{pid}}",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "进程文件打开数",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 3,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 10
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top},rate(node_process_read_bytes_total{instance=\"${instance}\"}[1m]))",
+          "legendFormat": "Read: {{name}} - Pid: {{pid}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "expr": "topk(${top},rate(node_process_read_bytes_total{instance=\"${instance}\"}[1m]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Write: {{name}} - Pid: {{pid}}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "进程磁盘读写IO",
       "type": "timeseries"
     }
   ],
@@ -329,7 +462,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(describe_node_process_cpu_info,instance)",
+        "definition": "label_values(node_process_cpu_usage_percent,instance)",
         "hide": 0,
         "includeAll": false,
         "label": "instance",
@@ -337,7 +470,7 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "label_values(describe_node_process_cpu_info,instance)",
+          "query": "label_values(node_process_cpu_usage_percent,instance)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -345,6 +478,44 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "10",
+          "value": "10"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "top",
+        "multi": false,
+        "name": "top",
+        "options": [
+          {
+            "selected": false,
+            "text": "5",
+            "value": "5"
+          },
+          {
+            "selected": true,
+            "text": "10",
+            "value": "10"
+          },
+          {
+            "selected": false,
+            "text": "20",
+            "value": "20"
+          },
+          {
+            "selected": false,
+            "text": "50",
+            "value": "50"
+          }
+        ],
+        "query": "5, 10, 20, 50",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
       }
     ]
   },
