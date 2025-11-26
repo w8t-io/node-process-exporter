@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -160,12 +161,22 @@ func getProcMemoryPercent(proc *process.Process) (float64, error) {
 }
 
 func main() {
-	var level logrus.Level
+	var (
+		port  int
+		level logrus.Level
+	)
 	ll := os.Getenv("LOG_LEVEL")
 	if ll == "debug" {
 		level = logrus.DebugLevel
 	} else {
 		level = logrus.InfoLevel
+	}
+
+	port, err := strconv.Atoi(os.Getenv("PORT"))
+	if err != nil {
+		port = 9002
+	} else if port < 1024 {
+		logrus.Fatalf("Invalid port number: %d. Please use a port number greater than or equal to 1024.", port)
 	}
 
 	logrus.SetFormatter(&logrus.TextFormatter{})
@@ -183,7 +194,7 @@ func main() {
 
 	http.Handle("/metrics", handler)
 
-	addr := ":9002"
+	addr := fmt.Sprintf(":%d", port)
 	logrus.Infof("Service started! Listening on %s", addr)
 
 	// 启动 HTTP 服务

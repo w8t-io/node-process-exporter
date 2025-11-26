@@ -4,6 +4,18 @@
 这是一个监控主机进程的exporter，用于分析主机进行的资源使用情况；通常在节点资源突然暴增时能够通过大盘快速定位到相应的 process。
 
 ## 运行 exporter
+
+### 本地运行
+```bash
+./process -port=9002
+```
+
+### Docker 运行
+```bash
+docker run -p 9002:9002 cairry/node-process-exporter:latest
+```
+
+### Kubernetes 运行
 ``` 
 apiVersion: apps/v1
 kind: DaemonSet
@@ -25,17 +37,18 @@ spec:
       - image: cairry/node-process-exporter:latest
         imagePullPolicy: IfNotPresent
         name: node-process-exporter
+        args: ["-port=9002"]
         ports:
         - containerPort: 9002
           hostPort: 9002
           protocol: TCP
         resources:
-          limits:
-            cpu: "1"
-            memory: 1Gi
-          requests:
-            cpu: 250m
-            memory: 512Mi
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 512Mi
         securityContext:
           privileged: true
 
