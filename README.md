@@ -7,7 +7,7 @@
 
 ### 本地运行
 ```bash
-./process -port=9002
+PORT=9002 ./process
 ```
 
 ### Docker 运行
@@ -37,7 +37,9 @@ spec:
       - image: cairry/node-process-exporter:latest
         imagePullPolicy: IfNotPresent
         name: node-process-exporter
-        args: ["-port=9002"]
+        env:
+        - name: PORT
+          value: 9002
         ports:
         - containerPort: 9002
           hostPort: 9002
